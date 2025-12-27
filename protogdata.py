@@ -79,22 +79,22 @@ class GameFam:
 # =====================================================
 
 Familiars = {
-    1: Familiar("ZUBRUTE",10,1,0,2),
-    2: Familiar("BOMBR",6,1,0,1),
-    3: Familiar("KALASKRUK",5,1,0,0),
-    4: Familiar("JEZMINA",6,1,1,3),
-    5: Familiar("ROBERT",6,2,0,1),
-    6: Familiar("BIEDRONE",3,2,2,0),
-    7: Familiar("STOZCNIK",11,2,0,3),
-    8: Familiar("WAVELTRON",8,2,0,2),
-    9: Familiar("BIOSUK",4,3,0,0),
-    10: Familiar("GOOSTAV",12,3,3,4),
-    11: Familiar("DOC MESTOS",7,3,3,1),
-    12: Familiar("RATDIO",4,4,0,0),
-    13: Familiar("SONARTA",6,4,0,0),
-    14: Familiar("STAYCJ",11,4,4,3),
-    15: Familiar("PALANNA",8,5,5,1),
-    16: Familiar("TURON",9,5,0,2),
+    1: Familiar("ZUBRUTE",10,1,0,2), #A bipedal bison built like a tank
+    2: Familiar("BOMBR",6,1,0,1), #A beaver that builds dams by nuking trees
+    3: Familiar("KALASKRUK",5,1,0,0), #A mischevous crow armed with a semiautomatic gun
+    4: Familiar("JEZMINA",6,1,1,3), #A mobile landmine hedhegog (passive: enemy receives recoil when hits)
+    5: Familiar("ROBERT",6,2,0,1), #An old generation robot with bad accuracy, but deadly when he hits
+    6: Familiar("BIEDRONE",3,2,2,0), #A tiny scout robotic ladybug (passive: accuracy check on hit)
+    7: Familiar("STOZCNIK",11,2,0,3), #A colossal port crane-robot
+    8: Familiar("WAVELTRON",8,2,0,2), #A robotic recreation of a mythical dragon from certain castle. Spits high octane fire
+    9: Familiar("BIOSUK",4,3,0,0), #A disgusting skunk that leaves a trail of pestilence
+    10: Familiar("GOOSTAV",12,3,3,4), #A sticky goo from the union of republics era. Passive: traps on contact
+    11: Familiar("DOC MESTOS",7,3,3,1), #A mutant mad scientist armed with a huge syringe bazooka
+    12: Familiar("RATDIO",4,4,0,0), #A tiny rat equiped with radiofrequence technology
+    13: Familiar("SONARTA",6,4,0,0), #A mechanical songbird that emmits a terrible screech
+    14: Familiar("STAYCJ",11,4,4,3), #A sturdy robotic girl that works as a beacon and brings allies to battle
+    15: Familiar("PALANNA",8,5,5,1), #The spring's spirit. Bursts on fire when the winter ends. Passive: Doubles damage output when half hp (ignited)
+    16: Familiar("TURON",9,5,0,2), #The jolly spirit of christmas with an alcohol addiction
 }
 
 Effects = {
@@ -173,11 +173,17 @@ Moves = {
 
 
 
-#unimplemented
 
 Equipables = {
-    1: Equipable("ITEM1",1,0),  
-    # ...
+    1: Equipable("FURY MUZZLE",1,33),  
+    2: Equipable("SLEEPING BAG",1,34),
+    3: Equipable("NET UPGRADE",2, 35),
+    4: Equipable("HI-VOLT CABLE", 2, 36),
+    5: Equipable("SYMBION", 3, 37),
+    6: Equipable("ACID GUN", 3, 38),
+    7: Equipable("PARABOLIC", 4, 39),
+    8: Equipable("ALGEBRA", 4, 40),
+    9: Equipable("SWORD OF TALES", 5, 41)
 }
 
 #unimplemented
@@ -200,27 +206,28 @@ def init_deck():
 
     for _ in range(40):
         r = random.randint(1,40)
-        if r < 11:
+        if r <= 10:
             PlayerDeck.append(Card(INVOKER,0,DECK))
-        elif r < 25:
+        elif r <= 23:
             PlayerDeck.append(Card(BOOSTER,0,DECK))
-        elif r < 33:
-            PlayerDeck.append(Card(EFFECT,r-24,DECK))
+        elif r <= 31:
+            PlayerDeck.append(Card(EFFECT,r-23,DECK))
         else:
-            PlayerDeck.append(Card(EQUIPABLE,r-32,DECK))
+            PlayerDeck.append(Card(EQUIPABLE,r-31,DECK))
 
     for _ in range(40):
         r = random.randint(1,40)
-        if r < 11:
+        if r < 10:
             FoeDeck.append(Card(INVOKER,0,DECK))
-        elif r < 25:
+        elif r < 23:
             FoeDeck.append(Card(BOOSTER,0,DECK))
-        elif r < 33:
-            FoeDeck.append(Card(EFFECT,r-24,DECK))
+        elif r < 31:
+            FoeDeck.append(Card(EFFECT,r-23,DECK))
         else:
-            FoeDeck.append(Card(EQUIPABLE,r-32,DECK))
+            FoeDeck.append(Card(EQUIPABLE,r-31,DECK))
 
     return PlayerDeck, FoeDeck
+
 
 #the monster deck is separate. running out of monsters
 #or having no benched monsters upon losing one, ends the game

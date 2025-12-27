@@ -4,6 +4,7 @@ endturn = False
 attackSelected = False
 choice = 0
 attack = 0
+handchoice = 0
 
 while endturn == False:
 
@@ -11,9 +12,14 @@ while endturn == False:
 
     if choice == 1:
         attack = battleloop.attackChoice()
-        if attack != 0:
+        if attack is None:
+            print("No attack selected.")
+        else:
             attackSelected = True
             endturn = True
+
+        
+
     if choice == 4:
         endturn = True
 

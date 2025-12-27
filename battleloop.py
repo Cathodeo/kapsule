@@ -1,7 +1,9 @@
 import protogdata, battleactions
 from protogdata import Moves
 
+
 PlayerMon, FoeMon = protogdata.init_mon()
+PlayerDeck, FoeDeck = protogdata.init_deck()
 
 #Tracking useful game state trackers
 
@@ -19,6 +21,37 @@ foeDeckPos = 0
 playerStackpos = 1  #next monster to draw. the initial monster is already draw on init
 foeStackpos = 1
 
+
+def count_hand(deck):
+    return sum(1 for card in deck if card.position == 3)
+
+def get_hand_cards(deck):
+    return [(i, card) for i, card in enumerate(deck) if card.position == 3]
+
+
+
+def drawInitial(playerDeckPos, foeDeckPos):
+    for _ in range(3):
+        protogdata.PlayerDeck[playerDeckPos].position = 3
+        protogdata.FoeDeck[foeDeckPos].position = 3
+        playerDeckPos += 1
+        foeDeckPos += 1
+    return playerDeckPos, foeDeckPos
+
+# playerDeckPos, foeDeckPos = drawInitial(playerDeckPos, foeDeckPos)
+
+def drawAfterTurn(playerDeckPos, foeDeckPos):
+    if count_hand(protogdata.PlayerDeck) > 6:
+        print("Your hand is full, no cards will be drawn!")
+    else:
+        protogdata.PlayerDeck[playerDeckPos].position = 3
+        playerDeckPos += 1
+    if count_hand(protogdata.FoeDeck) > 6:
+        print("The foe's hand is full, no cards drawn")
+    else:
+        protogdata.FoeDeck[foeDeckPos].position = 3
+        foeDeckPos += 1
+    return playerDeckPos, foeDeckPos
 
 # navigates through the different menus for actions
 
@@ -100,7 +133,20 @@ def attackChoice():
 
 
 
+def show_hand_and_choose():
+    hand = get_hand_cards(protogdata.PlayerDeck)
 
+    if not hand:
+        print("No cards in hand.")
+        return None  # this should return to the main menu
+    print("Choose a card:") #from all the Cards on the playerDeck
+    for option, (i, card) in enumerate(hand):
+        print(f"{option}. {card.cardtype}, id={card.subid}, pos={i}")
+
+    choice = int(input("Your selection: "))
+    chosen_index, chosen_card = hand[choice]
+
+    return chosen_index, chosen_card
 
     
 
